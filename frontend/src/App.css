@@ -135,6 +135,7 @@ h1 {
 }
 
 .app_main-section {
+  width: 100%;
   padding: 0 100px;
   background-color: var(--default_colour_1);
   color: white;
