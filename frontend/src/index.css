@@ -1,6 +1,9 @@
 :root {
   --default_colour_1: rgb(36, 34, 34);
-  --default_colour_2: rgb(50, 50, 50);
+  --default_colour_2: rgb(50, 89, 89);
+  --default_colour_3: rgb(50, 50, 50);
+  --title_font: "Bebas Neue", cursive;
+  --default-font: "Libre Franklin", sans-serif;
 }
 
 body {
@@ -8,5 +11,18 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: rgba(36, 34, 34);
+  background-image: url("./resources/new_york.webp");
+  background-color: rgba(36, 34, 34, 0.42);
+  background-size: cover;
+  background-blend-mode: darken;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--default-colour-13);
+  border-radius: 5px;
 }
