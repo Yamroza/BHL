@@ -14,13 +14,13 @@ def get_all_locations():
 def get_bble_location(bble: str):
     return assessment_info.get_bble_location(bble)
 
-@app.get("/info/assessed/{bble}")
-def get_bble_info(bble: str):
-    return assessment_info.get_full_bble_info(bble)
-
 @app.get("/info/assessed/near")
 def get_nearby_locations(lat: float, lon: float, radius: float):
     return assessment_info.get_bbles_close_to(lat, lon, radius)
+
+@app.get("/info/assessed/{bble}")
+def get_bble_info(bble: str):
+    return assessment_info.get_full_bble_info(bble)
 
 @app.get("/info/assessed/value/{bble}")
 def get_bble_value(bble: str):
