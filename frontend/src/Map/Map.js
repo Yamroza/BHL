@@ -18,6 +18,7 @@ const INITIAL_VIEW_STATE = {
 
 const Map = () => {
   const [unraveled, setUnraveled] = useState(false)
+  const [bestShow, setBestShow] = useState(false)
   const [longLat, setLongLat] = useState([0, 0])
   const [address, setAddress] = useState({country: '', city: '', postal_code: '', street: ''})
   const iconL = useRef(null)
@@ -101,6 +102,11 @@ const Map = () => {
           >
             <StaticMap mapboxApiAccessToken={myAccessToken} />
           </DeckGL>
+        </div>
+        <div className={`map_main-best_properties ${bestShow && 'show'}`} onClick={() => setBestShow((prev) => !prev)}>
+          <div className='map_main-best_properties-button'>
+            <h1>{'<'}</h1>
+          </div>
         </div>
       </div>
     </div>
