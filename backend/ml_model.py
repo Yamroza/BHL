@@ -123,8 +123,10 @@ def save_model(X_train, y_train):
 def best_bldgcl(model, classes, data_row):
     predictions_for_cl = {}
 
+    col_index = data_row.columns.get_loc("BLDGCL")
+
     for cl in classes:
-        data_row.loc[:, "BLDGCL"] = cl
+        data_row.at[0, 'BLDGCL'] = cl
         predictions_for_cl[cl] = model.predict(data_row)[0]
 
     return {'best': int(max(predictions_for_cl, key=predictions_for_cl.get)), 'money': int(max(predictions_for_cl.values()))}

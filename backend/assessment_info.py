@@ -27,7 +27,24 @@ def get_bbles_close_to(lat: float, lon: float, radius: float) -> list:
     return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2 < radius**2][["BBLE", "Latitude", "Longitude"]].to_dict("records")
 
 def get_closest_bble(lat: float, lon: float) -> str:
-    return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2].dropna(axis=1).to_dict("records")[0]
+    bbles = []
+
+    for bble in data["BBLE"].unique():
+        res = get_full_bble_info(bble)
+        if res == None:
+            continue
+
+        if not 'Latitude' in res.keys():
+            continue
+
+        bbles.append(res)
+    
+    print(bbles[0])
+
+    def keyer(x):
+        return (x['Latitude'] - lat)**2 + (x['Longitude'] - lon)**2
+
+    return min(bbles, key=keyer)
 
 def get_full_bble_info(bble: str) -> dict:
     return data[data["BBLE"] == bble].dropna(axis=1).to_dict("records")[0]
@@ -67,7 +84,24 @@ def get_top_locations(count: int) -> list:
     
     best_deals.sort(key=lambda x: x[1]['profit'], reverse=True)
 
-    return [{'bble': x[0], 'profit': x[1]['profit'], 'base_value': x[1]['base_value'], 'new_value': x[1]['new_value'], 'new_class': x[1]['best_class']} for x in best_deals[:count]]
+    l = []
+
+    for x in best_deals[:count]:
+        bble = data[data['BBLE'] == x[0]].to_dict('records')[0]
+
+        l.append({
+                'bble': x[0], 
+                'profit': x[1]['profit'], 
+                'base_value': x[1]['base_value'], 
+                'new_value': x[1]['new_value'], 
+                'new_class': x[1]['best_class'], 
+                'latitude': bble['Latitude'],
+                'longitude': bble['Longitude'],
+                'address': bble['STADDR'],
+                'owner': bble['OWNER'],
+            })
+
+    return l
 
 def get_top_locations_from(count: int, bbles: list) -> list:
     best_deals = []
@@ -83,6 +117,22 @@ def get_top_locations_from(count: int, bbles: list) -> list:
     
     best_deals.sort(key=lambda x: x[1]['profit'], reverse=True)
 
+    l = []
 
+    for x in best_deals[:count]:
+        bble = data[data['BBLE'] == x[0]].to_dict('records')[0]
 
-    return [{'bble': x[0], 'profit': x[1]['profit'], 'base_value': x[1]['base_value'], 'new_value': x[1]['new_value'], 'new_class': x[1]['best_class']} for x in best_deals[:count]]
+        l.append(
+            {'bble': x[0], 
+            'profit': x[1]['profit'], 
+            'base_value': x[1]['base_value'], 
+            'new_value': x[1]['new_value'], 
+            'new_class': x[1]['best_class'], 
+            'latitude': bble['Latitude'],
+            'longitude': bble['Longitude'],
+            'address': bble['STADDR'],
+            'owner': bble['OWNER'],
+            }
+        )
+
+    return l
