@@ -1,0 +1,24 @@
+:root {
+  --default_colour_1: rgb(36, 34, 34);
+  --default_colour_2: rgb(50, 89, 89);
+  --default_colour_3: rgb(50, 50, 50);
+  --title_font: "Bebas Neue", cursive;
+  --default-font: "Libre Franklin", sans-serif;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--default-colour-13);
+  border-radius: 5px;
+}
