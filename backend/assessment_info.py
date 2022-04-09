@@ -13,6 +13,8 @@ class_names = data["BLDGCL"].str[0].unique()
 model = xgboost.XGBRegressor()
 model.load_model('../model.json')
 
+
+
 def get_bble_locations() -> dict:
     return data[["BBLE", "Latitude", "Longitude"]].dropna().to_dict("records")
 
@@ -45,5 +47,14 @@ def get_potential_profit(bble: str) -> float:
     new_value = res['money']
 
 
-    return {'best_class': class_names[res['best']], 'profit': new_value - base_value, 'base_value': base_value, 'new_value': new_value}
+    return {'best_class': class_names[res['best']], 'profit': new_value - base_value, 'base_value': base_value, 'new_value': new_value, 'old_class': data[data['BBLE'] == bble]['BLDGCL'].tolist()[0][0]}
 
+def get_top_locations(count: int) -> list:
+    best_deals = []
+
+    for bble in data["BBLE"].unique():
+        best_deals.append((bble, get_potential_profit(bble)))
+    
+    best_deals.sort(key=lambda x: x[1]['profit'], reverse=True)
+
+    return {[{'bble': x[0], 'profit': x[1]['profit'], 'base_value': x[1]['base_value'], 'new_value': x[1]['new_value'], 'old_class': x[1]['old_class'], 'new_class': x[1]['best_class']} for x in best_deals[:count]]}
