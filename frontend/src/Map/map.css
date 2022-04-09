@@ -1,0 +1,196 @@
+.map_main {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../resources/new_york.webp");
+  background-color: rgba(36, 34, 34, 0.7);
+  background-size: cover;
+  background-blend-mode: darken;
+
+  font-family: var(--default-font);
+}
+
+.map_main-window {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 90vw;
+  height: 90vh;
+  overflow-x: hidden;
+
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  background-color: var(--default_colour_1);
+  cursor: pointer;
+
+  color: white;
+}
+
+.map_main-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0px 20px;
+  flex-grow: 2;
+  height: 102%;
+  transition: 0.3s;
+  border-radius: 10px 0 0 10px;
+  background-color: var(--default_colour_1);
+  border-right: 4px solid white;
+}
+
+.map_main-text h1 {
+  white-space: nowrap;
+  text-align: start;
+}
+
+.map_main-text p {
+  white-space: nowrap;
+  text-align: start;
+}
+
+.map_main-text_unraveled {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 25px;
+  padding: 10px 20px;
+  border-right: 4px solid white;
+  background-color: var(--default_colour_1);
+  border-radius: 10px;
+  flex-grow: 1;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.map_main-text_unraveled:hover {
+  flex-grow: 1.5;
+  transition: 1s;
+}
+
+.map_main-map {
+  position: relative;
+  flex-grow: 3;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.map_main-map:hover {
+  flex-grow: 3.1;
+  transition: 1s;
+}
+
+.map_main-map_unraveled {
+  position: relative;
+  flex-grow: 3;
+  height: 100%;
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+
+.map_map-form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.geocordinputs {
+  width: 18em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#latitude,
+#longitude {
+  width: 8.5em;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input {
+  background-color: rgba(100, 100, 100, 0.3);
+  color: rgb(240, 240, 240);
+  border: none;
+  height: 4em;
+  width: 18em;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+  transition: 0.5s;
+}
+
+input:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  transition: 0.5s;
+}
+
+.map_main-best_properties {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 100%;
+  width: 400px;
+  background-color: var(--default_colour_1);
+  top: 0;
+  left: 97%;
+  transition: 0.5s;
+}
+
+.map_main-best_properties:hover {
+  margin-left: -10px;
+  transition: 0.5s;
+}
+
+.map_main-best_properties-button {
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--title_font);
+  width: 60px;
+  height: 60px;
+  margin-left: -15px;
+  border-radius: 50%;
+  background-color: var(--default_colour_1);
+  transition: 0.5s;
+}
+
+.map_main-best_properties-button h1 {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.show {
+  left: 70%;
+}
+
+.show .map_main-best_properties-button {
+  transform-origin: center;
+  transform: rotate(180deg);
+  transition: 0.5s;
+}
+
+.show .map_main-best_properties-button h1 {
+  margin-left: 5px;
+}
