@@ -69,6 +69,9 @@ def prepare_data(data):
     data["STORIES"].loc[data["STORIES"].isnull()] = calc_average_from_block(data, data["BLOCK"], "STORIES")
     data = data.loc[data["FULLVAL"] != 0]
     
+    data["BLDGCL"]= data["BLDGCL"].str[0]
+    print(data["BLDGCL"])
+    
     le = preprocessing.LabelEncoder()
     le.fit(data['BLDGCL'])
     data.BLDGCL = le.transform(data.BLDGCL)
