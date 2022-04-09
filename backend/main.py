@@ -3,7 +3,6 @@ from typing import Optional
 from fastapi import FastAPI
 
 import assessment_info
-import pluto_info
 
 app = FastAPI(title="DEMOLISHER 2000")
 
@@ -34,40 +33,3 @@ def get_predicted_optimal_value(bble: str):
 @app.get("/info/assessed/potential/{bble}")
 def get_potential_profit(bble: str):
     return assessment_info.get_potential_profit(bble)
-
-@app.get("/info/pluto/closest")
-def get_closest_pluto_location(lat: float, lon: float):
-    return pluto_info.get_closest_pluto_location(lat, lon)
-
-@app.get("/info/pluto/lots/{borough}/{block}")
-def get_lots_in_block(borough: int, block: int):
-    return pluto_info.get_lots_in_block(borough, block)
-
-@app.get("/info/block/predicted/{borough}/{block}")
-def get_block_value(borough: int, block: int):
-    return get_block_value(borough, block)
-
-def get_block_value(borough: int, block: int) -> Optional[float]:
-    assessed_lots = assessment_info.data[assessment_info.data["BORO"] == borough][assessment_info.data["BLOCK"] == block]
-    if assessed_lots["FULLVAL"].empty:
-        return None
-
-    all_lots = pluto_info.get_lots_in_block(borough, block)
-
-    print(all_lots)
-
-    total_value = 0
-
-    lot_index = all_lots.columns.get_loc("lot") + 1
-
-    for lot in all_lots.itertuples():
-
-        lotinfo = assessed_lots[assessed_lots["LOT"] == lot[lot_index]]
-        print(lotinfo)
-
-        if lotinfo.empty:
-            total_value += pluto_info.predict_current_lot_value(borough, block, lot[lot_index])
-        else:
-            total_value += lotinfo["FULLVAL"].sum()
-
-    return total_value
