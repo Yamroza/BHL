@@ -48,20 +48,25 @@ def get_block_value(borough: int, block: int):
     return get_block_value(borough, block)
 
 def get_block_value(borough: int, block: int) -> Optional[float]:
-    if assessment_info.data[assessment_info.data["borocode"] == borough][assessment_info.data["block"] == block]["FULLVAL"].empty:
+    assessed_lots = assessment_info.data[assessment_info.data["BORO"] == borough][assessment_info.data["BLOCK"] == block]
+    if assessed_lots["FULLVAL"].empty:
         return None
 
     all_lots = pluto_info.get_lots_in_block(borough, block)
 
-    assessed_lots = assessment_info.data[assessment_info.data["borocode"] == borough][assessment_info.data["block"] == block]
+    print(all_lots)
 
     total_value = 0
 
-    for lot in all_lots.iterrows():
-        lotinfo = assessed_lots[assessed_lots["lot"] == lot["lot"]]
+    lot_index = all_lots.columns.get_loc("lot") + 1
+
+    for lot in all_lots.itertuples():
+
+        lotinfo = assessed_lots[assessed_lots["LOT"] == lot[lot_index]]
+        print(lotinfo)
 
         if lotinfo.empty:
-            total_value += pluto_info.predict_current_lot_value(borough, block, lot["lot"])
+            total_value += pluto_info.predict_current_lot_value(borough, block, lot[lot_index])
         else:
             total_value += lotinfo["FULLVAL"].sum()
 
