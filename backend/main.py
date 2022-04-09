@@ -16,6 +16,14 @@ def get_bble_location(bble: str):
 def get_nearby_locations(lat: float, lon: float, radius: float):
     return assessment_info.get_bbles_close_to(lat, lon, radius)
 
+@app.get("/info/assessed/closest")
+def get_closest_location(lat: float, lon: float):
+    return assessment_info.get_closest_location(lat, lon)
+
+@app.get("/info/assessed/top/{count}")
+def get_top_locations(count: int):
+    return assessment_info.get_top_locations(count)
+
 @app.get("/info/assessed/{bble}")
 def get_bble_info(bble: str):
     return assessment_info.get_full_bble_info(bble)

@@ -24,6 +24,9 @@ def get_bble_location(bble: str) -> dict:
 def get_bbles_close_to(lat: float, lon: float, radius: float) -> list:
     return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2 < radius**2][["BBLE", "Latitude", "Longitude"]].to_dict("records")
 
+def get_closest_bble(lat: float, lon: float) -> str:
+    return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2].dropna(axis=1).to_dict("records")[0]
+
 def get_full_bble_info(bble: str) -> dict:
     return data[data["BBLE"] == bble].dropna(axis=1).to_dict("records")[0]
 
@@ -43,3 +46,4 @@ def get_potential_profit(bble: str) -> float:
 
 
     return {'best_class': class_names[res['best']], 'profit': new_value - base_value, 'base_value': base_value, 'new_value': new_value}
+
