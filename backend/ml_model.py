@@ -98,7 +98,6 @@ def prepare_new_data(train_data, new_data):
     return data[len(data)-number_of_new:]
 
 def divide_data(data):
-    data.drop(labels=["BLOCK"],axis=1, inplace=True)
     X = data.loc[:, data.columns != 'FULLVAL']
     y = data["FULLVAL"]
     return X, y
