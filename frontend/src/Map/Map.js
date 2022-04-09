@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './map.css'
 import DeckGL from '@deck.gl/react';
-import {LineLayer} from '@deck.gl/layers';
+import {LineLayer, IconLayer} from '@deck.gl/layers';
 import {StaticMap} from 'react-map-gl';
 
 const  myAccessToken = 'pk.eyJ1IjoibmV3dG9uZWlybyIsImEiOiJjbDFyZDhlY3gwc2JhM2NvYTVlYzF3bDJ4In0.xEEsrH-weM3juIcyV8IzjQ'
@@ -18,13 +18,26 @@ const INITIAL_VIEW_STATE = {
 
 const Map = () => {
   const [unraveled, setUnraveled] = useState(false)
+  const [bestShow, setBestShow] = useState(false)
   const [longLat, setLongLat] = useState([0, 0])
   const [address, setAddress] = useState({country: '', city: '', postal_code: '', street: ''})
-  const data = [
-  {sourcePosition: [-122.41669, 37.7853], targetPosition: [-122.41669, 37.781]}
-];
-  const layers = [
-    new LineLayer({id: 'line-layer', data})
+  const iconL = useRef(null)
+
+  const ICON_MAPPING = {
+    marker: {x: 0, y: 0, width: 128, height: 128, mask: true}
+  };
+
+  var layers = [
+      new LineLayer({id: 'line-layer'}),
+      new IconLayer({
+      id: 'icon-layer',
+      data: [{coordinates: longLat}],
+      iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
+      iconMapping: ICON_MAPPING,
+      getIcon: d => 'marker',
+      sizeScale: 15,
+      getPosition: d => d.coordinates,
+    })
   ];
 
   const handleClick = async (e) => {
@@ -81,13 +94,19 @@ const Map = () => {
               </div>
         </div>
         <div className={unraveled?'map_main-map_unraveled':'map_main-map'} onClick={() => setUnraveled(true)}>
-          <DeckGL onClick={(e) => handleClick(e)}
+          <DeckGL ref={iconL}
+            onClick={(e) => handleClick(e)}
             initialViewState={INITIAL_VIEW_STATE}
             controller={true}
             layers={layers}
           >
             <StaticMap mapboxApiAccessToken={myAccessToken} />
           </DeckGL>
+        </div>
+        <div className={`map_main-best_properties ${bestShow && 'show'}`} onClick={() => setBestShow((prev) => !prev)}>
+          <div className='map_main-best_properties-button'>
+            <h1>{'<'}</h1>
+          </div>
         </div>
       </div>
     </div>
