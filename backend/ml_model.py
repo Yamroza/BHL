@@ -120,3 +120,14 @@ def save_model(X_train, y_train):
     model.fit(X_train, y_train)
     model.save_model('model.json')
 
+def best_bldgcl(model, classes, data_row):
+    predictions_for_cl = {}
+
+    print(classes)
+
+    for cl in classes:
+        data_row["BLDGCL"] = cl
+        predictions_for_cl[cl] = model.predict(data_row)[0]
+
+    return {'best': int(max(predictions_for_cl, key=predictions_for_cl.get)), 'money': int(max(predictions_for_cl.values()))}
+    

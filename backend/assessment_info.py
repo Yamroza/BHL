@@ -1,7 +1,17 @@
 import numpy as np
 import pandas as pd
+import xgboost
+
+import ml_model
 
 data = pd.read_csv('../data/train_data.csv')
+prepared_data = ml_model.prepare_data(pd.read_csv('../data/train_data.csv'))
+x, y = ml_model.divide_data(prepared_data)
+
+classes = x["BLDGCL"].unique()
+class_names = data["BLDGCL"].str[0].unique()
+model = xgboost.XGBRegressor()
+model.load_model('../model.json')
 
 def get_bble_locations() -> dict:
     return data[["BBLE", "Latitude", "Longitude"]].dropna().to_dict("records")
@@ -20,13 +30,16 @@ def get_full_bble_info(bble: str) -> dict:
 def get_bble_value(bble: str) -> float:
     return data[data["BBLE"] == bble]["FULLVAL"].tolist()[0]
 
-def get_predicted_optimal_value(bble: str) -> float:
-    # fancy algorithm here
-    return None
+def get_predicted_optimal_value(bble: str) -> dict:
+    row = x[data['BBLE'] == bble]
+    res = ml_model.best_bldgcl(model, classes, row)
+    return {'best_class': class_names[res['best']], 'best_value': res['money']}
 
 def get_potential_profit(bble: str) -> float:
-    # fancy algorithm here
+    row = x[data['BBLE'] == bble]
+    res = ml_model.best_bldgcl(model, classes, row)
+    base_value =  get_bble_value(bble)
+    new_value = res['money']
 
-    # profit = get_predicted_optimal_value(bble) - get_bble_value(bble)
 
-    return 0
+    return {'best_class': class_names[res['best']], 'profit': new_value - base_value, 'base_value': base_value, 'new_value': new_value}
