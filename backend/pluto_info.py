@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-data = pd.read_csv('../data/pluto_21v4.csv')
+data = pd.read_csv('../data/pluto_19v1.csv')
 
 def get_lots_in_block(borough: int, block: int) -> list:
     return data[data["borocode"] == borough][data["block"] == block]
