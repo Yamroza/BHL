@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import FastAPI
 
 import assessment_info
