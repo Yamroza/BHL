@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './map.css'
 import DeckGL from '@deck.gl/react';
-import {LineLayer, IconLayer} from '@deck.gl/layers';
+import {ScatterplotLayer} from '@deck.gl/layers';
 import {StaticMap} from 'react-map-gl';
+import { Fetch } from '../Fetch/Fetch';
 
 const  myAccessToken = 'pk.eyJ1IjoibmV3dG9uZWlybyIsImEiOiJjbDFyZDhlY3gwc2JhM2NvYTVlYzF3bDJ4In0.xEEsrH-weM3juIcyV8IzjQ'
 
@@ -17,28 +18,40 @@ const INITIAL_VIEW_STATE = {
 
 
 const Map = () => {
+  const [best, setBest] = useState([])
   const [unraveled, setUnraveled] = useState(false)
   const [bestShow, setBestShow] = useState(false)
   const [longLat, setLongLat] = useState([0, 0])
   const [address, setAddress] = useState({country: '', city: '', postal_code: '', street: ''})
+  const [layer, setLayer] = useState('')
   const iconL = useRef(null)
 
-  const ICON_MAPPING = {
-    marker: {x: 0, y: 0, width: 128, height: 128, mask: true}
-  };
+  useEffect(()=>{
+    async function getBest(){
+      const response = await Fetch.get(`info/assessed/top/5/near?lat=40&lon=-74&radius=0.589`)
+      setBest(response.data)
+    }
+    getBest()
+  },[])
 
-  var layers = [
-      new LineLayer({id: 'line-layer'}),
-      new IconLayer({
-      id: 'icon-layer',
+  useEffect(() => {
+    var layer = new ScatterplotLayer({
+      id: 'scatterplot-layer',
       data: [{coordinates: longLat}],
-      iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
-      iconMapping: ICON_MAPPING,
-      getIcon: d => 'marker',
-      sizeScale: 15,
-      getPosition: d => d.coordinates,
+      _dataDiff: (newData, odlData) => [...newData],
+      pickable: true,
+      opacity: 0.7,
+      radiusScale: 30,  // make the dots visible or darker background
+      radiusMinPixels: 15, // make the dots visible or darker background
+      radiusMaxPixels: 100,
+  
+      getPosition: d => [d.coordinates[1], d.coordinates[0]], // -> Essential Change here
+  
+      getColor: d => [20, 20, 20], // make the dots visible or darker background)
+      onClick: (info, event) => console.log('Clicked:', info, event)
     })
-  ];
+    setLayer(layer)
+  }, [longLat])
 
   const handleClick = async (e) => {
     setLongLat([e.coordinate[0].toFixed(7), e.coordinate[1].toFixed(7)])
@@ -53,6 +66,11 @@ const Map = () => {
             }
             setAddress({country: address[3], city: postal_code_city[1], postal_code: postal_code_city[0], street: address[0]})
         }
+      const response2 = await Fetch.get(`info/assessed/top/5/near?lat=${longLat[1]}&lon=${longLat[0]}&radius=0.1`)
+      setBest(response2.data)
+      console.log(response2.data)
+      // const response2 = await Fetch.get(`http://localhost:8000/info/assessed/closest?lat=${longLat[1]}&lon=${longLat[0]}`)
+      // console.log(response2)
 
   }
 
@@ -98,7 +116,7 @@ const Map = () => {
             onClick={(e) => handleClick(e)}
             initialViewState={INITIAL_VIEW_STATE}
             controller={true}
-            layers={layers}
+            layers={[layer]}
           >
             <StaticMap mapboxApiAccessToken={myAccessToken} />
           </DeckGL>
@@ -106,6 +124,16 @@ const Map = () => {
         <div className={`map_main-best_properties ${bestShow && 'show'}`} onClick={() => setBestShow((prev) => !prev)}>
           <div className='map_main-best_properties-button'>
             <h1>{'<'}</h1>
+          </div>
+          <div className='best_list'>
+            <h1>Hot buildings near You</h1>
+            {best.length > 0 && best.map((property, n) => {
+              return <div key={property.bble} className={`${(n+1)%2 === 0 && "colour_header"} best-property`}>
+                    <h2>{n+1}. {property.address}</h2>
+                    <h4>{property.owner}</h4>
+                    <h2>${property.profit}</h2>
+                </div>
+            })}
           </div>
         </div>
       </div>
