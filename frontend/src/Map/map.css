@@ -73,7 +73,7 @@
 
 .map_main-map {
   position: relative;
-  flex-grow: 4;
+  flex-grow: 3;
   height: 100%;
   transition: 0.3s;
 }
