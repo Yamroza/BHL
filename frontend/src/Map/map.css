@@ -1,0 +1,60 @@
+.map_main {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../resources/new_york.webp");
+  background-color: rgba(36, 34, 34, 0.42);
+  background-size: cover;
+  background-blend-mode: darken;
+}
+
+.map_main-window {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 90vw;
+  height: 90vh;
+
+  background-color: var(--default_colour_1);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  color: white;
+}
+
+.map_main-text {
+  padding: 20px;
+  flex-grow: 7;
+  height: 100%;
+  transition: 0.5s;
+}
+
+.map_main-text h1 {
+  text-align: start;
+}
+
+.map_main-text_unraveled {
+  padding: 0;
+  width: 0;
+  flex-grow: 0;
+  transition: 0.5s;
+}
+
+.map_main-map {
+  flex-grow: 2;
+  height: 100%;
+  background-color: antiquewhite;
+  transition: 0.5s;
+}
+
+.map_main-map_unraveled {
+  flex-grow: 9;
+  transition: 0.5s;
+}
