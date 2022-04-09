@@ -37,7 +37,7 @@ def get_nearby_locations(lat: float, lon: float, radius: float):
 
 @app.get("/info/assessed/closest")
 def get_closest_location(lat: float, lon: float):
-    return assessment_info.get_closest_location(lat, lon)
+    return assessment_info.get_closest_bble(lat, lon)
 
 @app.get("/info/assessed/top/{count}")
 def get_top_locations(count: int):
