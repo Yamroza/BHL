@@ -3,3 +3,6 @@
 /backend/.env
 data/pluto_19v1.csv
 data/pluto_21v4.csv
+
+backend/__pycache__
+.ipynb_checkpoints

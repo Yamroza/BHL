@@ -12,7 +12,7 @@ def get_bble_location(bble: str) -> dict:
 
 # accepts radius in degrees
 def get_bbles_close_to(lat: float, lon: float, radius: float) -> list:
-    return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2 < radius**2]["BBLE"].tolist()
+    return data[(data["Latitude"] - lat)**2 + (data["Longitude"] - lon)**2 < radius**2][["BBLE", "Latitude", "Longitude"]].to_dict("records")
 
 def get_full_bble_info(bble: str) -> dict:
     return data[data["BBLE"] == bble].dropna(axis=1).to_dict("records")[0]
