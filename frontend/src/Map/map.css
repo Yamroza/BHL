@@ -3,9 +3,11 @@
   width: 100vw;
   height: 100vh;
   background-image: url("../resources/new_york.webp");
-  background-color: rgba(36, 34, 34, 0.42);
+  background-color: rgba(36, 34, 34, 0.7);
   background-size: cover;
   background-blend-mode: darken;
+
+  font-family: var(--default-font);
 }
 
 .map_main-window {
@@ -30,31 +32,107 @@
 }
 
 .map_main-text {
-  padding: 20px;
-  flex-grow: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 20px;
+  flex-grow: 3;
   height: 100%;
-  transition: 0.5s;
+  transition: 0.3s;
+  border-right: 4px solid white;
 }
 
 .map_main-text h1 {
+  white-space: nowrap;
+  text-align: start;
+}
+
+.map_main-text p {
+  white-space: nowrap;
   text-align: start;
 }
 
 .map_main-text_unraveled {
-  padding: 0;
-  width: 0;
-  flex-grow: 0;
-  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 25px;
+  padding: 10px 20px;
+  border-right: 4px solid white;
+  flex-grow: 1;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.map_main-text_unraveled:hover {
+  flex-grow: 1.1;
+  transition: 0.1s;
 }
 
 .map_main-map {
-  flex-grow: 2;
+  position: relative;
+  flex-grow: 1;
   height: 100%;
-  background-color: antiquewhite;
-  transition: 0.5s;
+  transition: 0.3s;
+}
+
+.map_main-map:hover {
+  flex-grow: 1.1;
+  transition: 0.1s;
 }
 
 .map_main-map_unraveled {
-  flex-grow: 9;
+  position: relative;
+  flex-grow: 3;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.map_map-form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.geocordinputs {
+  width: 18em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#latitude,
+#longitude {
+  width: 8.5em;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input {
+  background-color: rgba(100, 100, 100, 0.3);
+  color: rgb(240, 240, 240);
+  border: none;
+  height: 4em;
+  width: 18em;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+  transition: 0.5s;
+}
+
+input:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
   transition: 0.5s;
 }

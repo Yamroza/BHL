@@ -8,10 +8,10 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
+  <React.Fragment>
     <Router>
       <App />
     </Router>
-  </React.StrictMode>
+  </React.Fragment>
 );
 
