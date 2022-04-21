@@ -68,7 +68,6 @@ const Map = () => {
         }
       const response2 = await Fetch.get(`info/assessed/top/5/near?lat=${longLat[1]}&lon=${longLat[0]}&radius=0.1`)
       setBest(response2.data)
-      console.log(response2.data)
       // const response2 = await Fetch.get(`http://localhost:8000/info/assessed/closest?lat=${longLat[1]}&lon=${longLat[0]}`)
       // console.log(response2)
 

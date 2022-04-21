@@ -4,8 +4,7 @@ import {Route, Switch, useRouteMatch} from 'react-router-dom'
 import Map from './Map/Map'
 
 const App = () => {
-    let { path } = useRouteMatch();
-    console.log(path)
+  let { path } = useRouteMatch();
 
   return (
   <Switch>

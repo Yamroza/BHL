@@ -136,7 +136,7 @@ input:focus {
   align-items: center;
   justify-content: start;
   height: 100%;
-  width: 450px;
+  width: 100%;
   background-color: var(--default_colour_1);
   top: 0;
   left: 97%;
@@ -187,7 +187,8 @@ input:focus {
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  width: 70%;
+  padding: 0 0 0 20px;
+  width: 60%;
   height: 100%;
 }
 

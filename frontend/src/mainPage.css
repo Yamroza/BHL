@@ -50,7 +50,7 @@
   width: 100%;
   top: 30%;
   left: 0;
-  transform: scale(7);
+  transform: scale(9);
   z-index: 20;
   opacity: 0.7;
   font-family: var(--title_font);
@@ -99,7 +99,7 @@ h1 {
   top: 0;
   left: 40%;
   z-index: 30;
-  transform: scale(1.5);
+  width: 400px;
 }
 
 .mainPage_main-map_link {
@@ -135,11 +135,16 @@ h1 {
 }
 
 .mainPage_main-section {
-  width: auto;
-  padding: 0 100px;
+  display: inline-block;
+  width: 100vw;
   background-color: var(--default_colour_1);
   color: white;
   z-index: 100;
+}
+
+.mainPage_main-section p,
+.mainPage_main-section h1 {
+  padding: 10px;
 }
 
 .mainPage_main-section_demolishion {

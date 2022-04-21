@@ -1,7 +1,5 @@
 import './mainPage.css';
 import { useEffect } from 'react';
-import {Redirect} from 'react-router-dom'
-import { Fetch } from './Fetch/Fetch';
 import ball from './resources/ball.png'
 import background from './resources/new_york.webp'
 import frontground from './resources/frontground.png'
@@ -47,10 +45,10 @@ function MainPage() {
       <img id='wrecking_ball' className='mainPage_main-wrecking_ball' src={ball} alt='ball'/>
       <div className='mainPage_main-section'>
         <h1 style={{textAlign: 'left'}}>What do we mean?</h1>
-        "I bet that's another marketing trick just to catch my attention". Well you're not wrong. But at the same time it is not a scam. We actually aim to destroy the Big mainPagele (in a legal way). <br/>
+        <p>"I bet that's another marketing trick just to catch my attention". Well you're not wrong. But at the same time it is not a scam. We actually aim to destroy the Big mainPagele (in a legal way). <br/>
         What we're trying to say is that you can actually demolish some of the buildings to make place for the newer, bigger, more expensive ones. <br/>
         The catch is that you have to pay for these in advance aswell but we recon that since you can afford to literally demolish a building from the streets of New York,
-        you can probably afford to build one aswell. Why not give it a try?<br/>
+        you can probably afford to build one aswell. Why not give it a try?<br/></p>
         <h1 style={{textAlign: 'left'}}>And just a quick glimpse:</h1>
         <div className='mainPage_main-section_demolishion'>
           <img src={demolish_1} alt='demolish_1'></img>
